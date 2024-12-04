@@ -12,8 +12,8 @@ const Hero = () => {
         aria-hidden="true"
       ></div>
 
-      {/* Semi-transparent Overlay */}
-      <div className="absolute inset-0 bg-black/40"></div>
+
+      <div className="absolute inset-0 bg-black/60"></div>
 
       {/* Content */}
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
