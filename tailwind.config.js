@@ -13,6 +13,9 @@ export default {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
+		  fontFamily: {
+			roboto: ['Roboto', 'sans-serif'],
+		  },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -44,6 +47,20 @@ export default {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
+			  animation: {
+				'fade-in-down': 'fadeInDown 1s ease-out',
+				'fade-in-up': 'fadeInUp 1s ease-out',
+			  },
+			  keyframes: {
+				fadeInDown: {
+				  '0%': { opacity: '0', transform: 'translateY(-10px)' },
+				  '100%': { opacity: '1', transform: 'translateY(0)' },
+				},
+				fadeInUp: {
+				  '0%': { opacity: '0', transform: 'translateY(10px)' },
+				  '100%': { opacity: '1', transform: 'translateY(0)' },
+				},
+			  },
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
