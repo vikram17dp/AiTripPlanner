@@ -1,11 +1,16 @@
 
 import './App.css'
+import { Button } from './components/ui/button'
 
 function App() {
  
 
   return (
-  <div>Hello</div>
+  <div>
+    <h2>welcome to project</h2>
+    <Button>Hello</Button>
+
+  </div>
        
        
   )
