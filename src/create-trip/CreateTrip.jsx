@@ -94,8 +94,7 @@ const CreateTrip = () => {
       const text = response.text()
       console.log("AI Response:", text)
 
-      // Here you would typically parse the JSON response and update your UI
-      // For now, we'll just show a success message
+      
       toast.success("Trip planned successfully!")
     } catch (error) {
       console.error("Error generating trip:", error)
