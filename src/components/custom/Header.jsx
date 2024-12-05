@@ -23,7 +23,13 @@ const Header = () => {
                 strokeWidth="2"
               />
             </svg>
+            <NavLink
+              to="/"
+              className={'cursor-pointer'}
+            >
+             
             <span className="text-2xl font-bold">AiTripPlanner</span>
+            </NavLink>
           </div>
           <nav className="hidden md:flex space-x-8">
             <NavLink
@@ -37,7 +43,7 @@ const Header = () => {
               Home
             </NavLink>
             <NavLink
-              to="/plan"
+              to="/create-trip"
               className={({ isActive }) =>
                 isActive
                   ? 'text-purple-200 font-bold transition'
