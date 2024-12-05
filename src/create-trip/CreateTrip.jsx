@@ -184,7 +184,7 @@ const CreateTrip = () => {
           <h2 className="text-2xl font-semibold mb-4">
             How many people are traveling?
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {SelectNoOfPersons.map((item, index) => (
               <div
                 key={index}
