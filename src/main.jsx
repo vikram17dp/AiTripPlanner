@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CreateTrip from "./create-trip/CreateTrip";
 import Header from "./components/custom/Header";
+import AboutPage from "./create-trip/AboutPage";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,16 @@ const router = createBrowserRouter([
       </>
     ),
   },
+  {
+    path: "/aboutpage",
+    element: (
+      <>
+        <Header />
+        <AboutPage/>
+      </>
+    ),
+  },
+  
 ]);
 
 createRoot(document.getElementById("root")).render(

@@ -47,7 +47,7 @@ const Header = () => {
               Plan Trip
             </NavLink>
             <NavLink
-              to="/about"
+              to="/aboutpage"
               className={({ isActive }) =>
                 isActive
                   ? 'text-purple-200 font-bold transition'
