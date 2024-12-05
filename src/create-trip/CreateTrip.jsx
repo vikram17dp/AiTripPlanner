@@ -1,67 +1,77 @@
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { SelectBudgetOptions, SelectNoOfPersons } from "@/constants/Options"
-import React, { useState, useEffect } from "react"
-import { Search, Loader2 } from 'lucide-react'
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { SelectBudgetOptions, SelectNoOfPersons } from "@/constants/Options";
+import React, { useState, useEffect } from "react";
+import { Search, Loader2 } from "lucide-react";
 
 const CreateTrip = () => {
   const apiKey = import.meta.env.VITE_TOM_TOM_API_KEY;
-  const [inputValue, setInputValue] = useState("")
-  const [suggestions, setSuggestions] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [days, setDays] = useState("")
-  const [selectedBudget, setSelectedBudget] = useState(null)
-  const [selectedPersons, setSelectedPersons] = useState(null)
+  const [inputValue, setInputValue] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [days, setDays] = useState("");
+  const [selectedBudget, setSelectedBudget] = useState(null);
+  const [selectedPersons, setSelectedPersons] = useState(null);
 
   useEffect(() => {
-    const script = document.createElement("script")
-    script.src = `https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.15.0/maps/maps-web.min.js?key=${apiKey}`
-    script.type = "text/javascript"
-    script.async = true
-    document.head.appendChild(script)
+    const script = document.createElement("script");
+    script.src = `https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.15.0/maps/maps-web.min.js?key=${apiKey}`;
+    script.type = "text/javascript";
+    script.async = true;
+    document.head.appendChild(script);
 
     return () => {
-      document.head.removeChild(script)
-    }
-  }, [apiKey])
+      document.head.removeChild(script);
+    };
+  }, [apiKey]);
 
   const handleInputChange = async (e) => {
-    const value = e.target.value
-    setInputValue(value)
+    const value = e.target.value;
+    setInputValue(value);
 
     if (value.length > 2) {
-      setLoading(true)
+      setLoading(true);
       try {
         const response = await fetch(
           `https://api.tomtom.com/search/2/search/${value}.json?key=${apiKey}&typeahead=true&limit=5`
-        )
-        const data = await response.json()
-        setSuggestions(data.results)
+        );
+        const data = await response.json();
+        setSuggestions(data.results);
       } catch (error) {
-        console.error("Error fetching autocomplete suggestions:", error)
+        console.error("Error fetching autocomplete suggestions:", error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     } else {
-      setSuggestions([])
+      setSuggestions([]);
     }
-  }
+  };
 
   const handleSuggestionClick = (address) => {
-    setInputValue(address)
-    setSuggestions([])
-  }
+    setInputValue(address);
+    setSuggestions([]);
+  };
+
+  const handleSubmit = () => {
+    const tripData = {
+      destination: inputValue,
+      days,
+      budget: selectedBudget !== null ? SelectBudgetOptions[selectedBudget] : null,
+      persons: selectedPersons !== null ? SelectNoOfPersons[selectedPersons] : null,
+    };
+    console.log("Trip Data:", tripData);
+  };
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <h1 className="text-4xl font-bold text-left mb-2">
         Tell us your travel preferences 🏕️🌴
       </h1>
-      <p className="text-gray-600  mb-10 text-md text-left">
+      <p className="text-gray-600 mb-10 text-md text-left">
         Just provide some basic information, and our trip planner will generate
         a customized itinerary based on your preferences.
       </p>
-      
+
       <div className="space-y-8">
         <div>
           <h2 className="text-2xl font-semibold mb-4">
@@ -86,7 +96,9 @@ const CreateTrip = () => {
                   <button
                     key={index}
                     className="w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                    onClick={() => handleSuggestionClick(suggestion.address.freeformAddress)}
+                    onClick={() =>
+                      handleSuggestionClick(suggestion.address.freeformAddress)
+                    }
                   >
                     {suggestion.address.freeformAddress}
                   </button>
@@ -100,9 +112,9 @@ const CreateTrip = () => {
           <h2 className="text-2xl font-semibold mb-4">
             How many days are you planning your trip?
           </h2>
-          <Input 
-            placeholder="Ex. 3" 
-            type="number" 
+          <Input
+            placeholder="Ex. 3"
+            type="number"
             value={days}
             onChange={(e) => setDays(e.target.value)}
             className="w-full pr-10"
@@ -113,10 +125,12 @@ const CreateTrip = () => {
           <h2 className="text-2xl font-semibold mb-4">What is Your Budget?</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {SelectBudgetOptions.map((item, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className={`cursor-pointer transition-all duration-300 p-3 border rounded-lg ${
-                  selectedBudget === index ? 'ring-2 ring-blue-500 shadow-md' : 'hover:shadow-lg'
+                  selectedBudget === index
+                    ? "ring-2 ring-blue-500 shadow-md"
+                    : "hover:shadow-lg"
                 }`}
                 onClick={() => setSelectedBudget(index)}
               >
@@ -129,32 +143,37 @@ const CreateTrip = () => {
         </div>
 
         <div>
-          <h2 className="text-2xl font-semibold mb-4">How many people are traveling?</h2>
+          <h2 className="text-2xl font-semibold mb-4">
+            How many people are traveling?
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {SelectNoOfPersons.map((item, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className={`cursor-pointer transition-all duration-300 p-3 border rounded-lg ${
-                  selectedPersons === index ? 'ring-2 ring-blue-500 shadow-md' : 'hover:shadow-lg'
+                  selectedPersons === index
+                    ? "ring-2 ring-blue-500 shadow-md"
+                    : "hover:shadow-lg"
                 }`}
                 onClick={() => setSelectedPersons(index)}
               >
                 <div className="text-4xl mb-2">{item.icon}</div>
                 <h3 className="text-lg font-semibold mb-1">{item.title}</h3>
                 <p className="text-sm text-gray-600">{item.desc}</p>
-                <p className="text-sm font-medium mt-2">{item.no}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <Button className="w-full max-w-md mx-auto mt-8 py-6 text-lg bg-slate-600">
+        <Button
+          className="w-full max-w-md mx-auto mt-8 py-6 text-lg bg-slate-600"
+          onClick={handleSubmit}
+        >
           Plan My Trip
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CreateTrip
-
+export default CreateTrip;
