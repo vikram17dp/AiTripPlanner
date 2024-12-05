@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { SelectBudgetOptions, SelectNoOfPersons } from "@/constants/Options";
 import React, { useState, useEffect } from "react";
 import { Search, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 const CreateTrip = () => {
   const apiKey = import.meta.env.VITE_TOM_TOM_API_KEY;
@@ -12,6 +13,7 @@ const CreateTrip = () => {
   const [days, setDays] = useState("");
   const [selectedBudget, setSelectedBudget] = useState(null);
   const [selectedPersons, setSelectedPersons] = useState(null);
+  
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -53,6 +55,18 @@ const CreateTrip = () => {
   };
 
   const handleSubmit = () => {
+    // Check if all fields are filled
+    if (!inputValue || !days || selectedBudget === null || selectedPersons === null) {
+      toast.error("Please fill all details before submitting.");
+      return;
+    }
+  
+    // Restrict the number of days to a maximum of 5
+    if (parseInt(days) > 5) {
+      toast.error("You cannot plan a trip for more than 5 days.");
+      return;
+    }
+  
     const tripData = {
       destination: inputValue,
       days,
@@ -60,7 +74,20 @@ const CreateTrip = () => {
       persons: selectedPersons !== null ? SelectNoOfPersons[selectedPersons] : null,
     };
     console.log("Trip Data:", tripData);
+  
+    toast.success("Trip planned successfully!");
   };
+  
+
+
+    const tripData = {
+      destination: inputValue,
+      days,
+      budget: selectedBudget !== null ? SelectBudgetOptions[selectedBudget] : null,
+      persons: selectedPersons !== null ? SelectNoOfPersons[selectedPersons] : null,
+    };
+    console.log("Trip Data:", tripData);
+  
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -119,6 +146,7 @@ const CreateTrip = () => {
             onChange={(e) => setDays(e.target.value)}
             className="w-full pr-10"
           />
+          
         </div>
 
         <div>

@@ -113,13 +113,13 @@ const Header = () => {
             <div className="border-t mt-2">
               <Button
                 variant="secondary"
-                className="block w-full px-4 py-2 text-center"
+                 className="block w-full px-4 py-2 text-center bg-slate-500 text-white mt-2 hover:bg-purple-600"
               >
                 Sign Up
               </Button>
               <Button
                 variant="outline"
-                className="block w-full px-4 py-2 text-center bg-purple-500 text-white mt-2 hover:bg-purple-600"
+                className="block w-full px-4 py-2 text-center bg-slate-500 text-white mt-2 hover:bg-purple-600"
               >
                 Sign In
               </Button>
