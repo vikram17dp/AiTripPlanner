@@ -1,93 +1,109 @@
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { SelectBudgetOptions, SelectNoOfPersons } from "@/constants/Options";
-import React, { useState, useEffect } from "react";
-import { Search, Loader2 } from "lucide-react";
-import { toast } from "sonner";
+
+
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { AI_PROMPT, SelectBudgetOptions, SelectNoOfPersons } from "@/constants/Options"
+import React, { useState, useEffect } from "react"
+import { Search, Loader2 } from 'lucide-react'
+import { toast } from "sonner"
+import { GoogleGenerativeAI } from "@google/generative-ai"
 
 const CreateTrip = () => {
-  const apiKey = import.meta.env.VITE_TOM_TOM_API_KEY;
-  const [inputValue, setInputValue] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [days, setDays] = useState("");
-  const [selectedBudget, setSelectedBudget] = useState(null);
-  const [selectedPersons, setSelectedPersons] = useState(null);
-  
+  const tomTomApiKey = import.meta.env.VITE_TOM_TOM_API_KEY;
+  const geminiApiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  const [inputValue, setInputValue] = useState("")
+  const [suggestions, setSuggestions] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [days, setDays] = useState("")
+  const [selectedBudget, setSelectedBudget] = useState(null)
+  const [selectedPersons, setSelectedPersons] = useState(null)
 
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = `https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.15.0/maps/maps-web.min.js?key=${apiKey}`;
-    script.type = "text/javascript";
-    script.async = true;
-    document.head.appendChild(script);
+    const script = document.createElement("script")
+    script.src = `https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.15.0/maps/maps-web.min.js?key=${tomTomApiKey}`
+    script.type = "text/javascript"
+    script.async = true
+    document.head.appendChild(script)
 
     return () => {
-      document.head.removeChild(script);
-    };
-  }, [apiKey]);
+      document.head.removeChild(script)
+    }
+  }, [tomTomApiKey])
 
   const handleInputChange = async (e) => {
-    const value = e.target.value;
-    setInputValue(value);
+    const value = e.target.value
+    setInputValue(value)
 
     if (value.length > 2) {
-      setLoading(true);
+      setLoading(true)
       try {
         const response = await fetch(
-          `https://api.tomtom.com/search/2/search/${value}.json?key=${apiKey}&typeahead=true&limit=5`
-        );
-        const data = await response.json();
-        setSuggestions(data.results);
+          `https://api.tomtom.com/search/2/search/${value}.json?key=${tomTomApiKey}&typeahead=true&limit=5`
+        )
+        const data = await response.json()
+        setSuggestions(data.results)
       } catch (error) {
-        console.error("Error fetching autocomplete suggestions:", error);
+        console.error("Error fetching autocomplete suggestions:", error)
+        toast.error("Failed to fetch suggestions. Please try again.")
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     } else {
-      setSuggestions([]);
+      setSuggestions([])
     }
-  };
+  }
 
   const handleSuggestionClick = (address) => {
-    setInputValue(address);
-    setSuggestions([]);
-  };
+    setInputValue(address)
+    setSuggestions([])
+  }
 
-  const handleSubmit = () => {
-    // Check if all fields are filled
+  const handleSubmit = async () => {
     if (!inputValue || !days || selectedBudget === null || selectedPersons === null) {
-      toast.error("Please fill all details before submitting.");
-      return;
+      toast.error("Please fill all details before submitting.")
+      return
     }
-  
-    // Restrict the number of days to a maximum of 5
+
     if (parseInt(days) > 5) {
-      toast.error("You cannot plan a trip for more than 5 days.");
-      return;
+      toast.error("You cannot plan a trip for more than 5 days.")
+      return
     }
-  
-    const tripData = {
-      destination: inputValue,
-      days,
-      budget: selectedBudget !== null ? SelectBudgetOptions[selectedBudget] : null,
-      persons: selectedPersons !== null ? SelectNoOfPersons[selectedPersons] : null,
-    };
-    console.log("Trip Data:", tripData);
-  
-    toast.success("Trip planned successfully!");
-  };
-  
-
 
     const tripData = {
       destination: inputValue,
       days,
-      budget: selectedBudget !== null ? SelectBudgetOptions[selectedBudget] : null,
-      persons: selectedPersons !== null ? SelectNoOfPersons[selectedPersons] : null,
-    };
-    console.log("Trip Data:", tripData);
-  
+      budget: SelectBudgetOptions[selectedBudget],
+      persons: SelectNoOfPersons[selectedPersons],
+    }
+
+    const FINAL_PROMPT = AI_PROMPT
+      .replace("{location}", tripData.destination)
+      .replace("{noOfDays}", tripData.days)
+      .replace("{People}", tripData.persons.title)
+      .replace("{Budget}", tripData.budget.title)
+
+    console.log("Final Prompt:", FINAL_PROMPT)
+
+    try {
+      setLoading(true)
+      const genAI = new GoogleGenerativeAI(geminiApiKey)
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" })
+
+      const result = await model.generateContent(FINAL_PROMPT)
+      const response = await result.response
+      const text = response.text()
+      console.log("AI Response:", text)
+
+      // Here you would typically parse the JSON response and update your UI
+      // For now, we'll just show a success message
+      toast.success("Trip planned successfully!")
+    } catch (error) {
+      console.error("Error generating trip:", error)
+      toast.error("Failed to plan trip. Please try again.")
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -123,9 +139,7 @@ const CreateTrip = () => {
                   <button
                     key={index}
                     className="w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                    onClick={() =>
-                      handleSuggestionClick(suggestion.address.freeformAddress)
-                    }
+                    onClick={() => handleSuggestionClick(suggestion.address.freeformAddress)}
                   >
                     {suggestion.address.freeformAddress}
                   </button>
@@ -146,7 +160,6 @@ const CreateTrip = () => {
             onChange={(e) => setDays(e.target.value)}
             className="w-full pr-10"
           />
-          
         </div>
 
         <div>
@@ -156,9 +169,7 @@ const CreateTrip = () => {
               <div
                 key={index}
                 className={`cursor-pointer transition-all duration-300 p-3 border rounded-lg ${
-                  selectedBudget === index
-                    ? "ring-2 ring-blue-500 shadow-md"
-                    : "hover:shadow-lg"
+                  selectedBudget === index ? "ring-2 ring-blue-500 shadow-md" : "hover:shadow-lg"
                 }`}
                 onClick={() => setSelectedBudget(index)}
               >
@@ -174,14 +185,12 @@ const CreateTrip = () => {
           <h2 className="text-2xl font-semibold mb-4">
             How many people are traveling?
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {SelectNoOfPersons.map((item, index) => (
               <div
                 key={index}
                 className={`cursor-pointer transition-all duration-300 p-3 border rounded-lg ${
-                  selectedPersons === index
-                    ? "ring-2 ring-blue-500 shadow-md"
-                    : "hover:shadow-lg"
+                  selectedPersons === index ? "ring-2 ring-blue-500 shadow-md" : "hover:shadow-lg"
                 }`}
                 onClick={() => setSelectedPersons(index)}
               >
@@ -196,12 +205,14 @@ const CreateTrip = () => {
         <Button
           className="w-full max-w-md mx-auto mt-8 py-6 text-lg bg-slate-600"
           onClick={handleSubmit}
+          disabled={loading}
         >
-          Plan My Trip
+          {loading ? "Planning Trip..." : "Plan My Trip"}
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CreateTrip;
+export default CreateTrip
+
