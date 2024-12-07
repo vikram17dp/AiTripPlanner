@@ -8,6 +8,8 @@ import Header from "./components/custom/Header";
 import AboutPage from "./create-trip/AboutPage";
 import { Toaster } from "./components/ui/sonner";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Signin from "./authentication/Signin";
+import AppContextProvider from "./context/AppContext";
 
 const router = createBrowserRouter([
   {
@@ -37,14 +39,24 @@ const router = createBrowserRouter([
       </>
     ),
   },
+  {
+    path: "/signin",
+    element: (
+      <>
+        <Header />
+        <Signin/>
+      </>
+    ),
+  },
   
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  <AppContextProvider>
+
     <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>
     <RouterProvider router={router} />
     <Toaster />
     </GoogleOAuthProvider>;
-  </StrictMode>
+  </AppContextProvider>
 );
