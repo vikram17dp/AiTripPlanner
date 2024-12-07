@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { Button } from '../ui/button';
-import { Menu, X } from 'lucide-react';
-import { AppContext } from '../../context/AppContext';
+import React, { useContext, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { Button } from "../ui/button";
+import { Menu, X } from "lucide-react";
+import { AppContext } from "../../context/AppContext";
 
 const Header = () => {
   const { userData, setToken, setUserData } = useContext(AppContext);
@@ -14,7 +14,7 @@ const Header = () => {
   const handleLogout = () => {
     setToken(false);
     setUserData(false);
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
   };
 
   const handleProfileToggle = () => {
@@ -56,12 +56,25 @@ const Header = () => {
                 </button>
                 {isProfileMenuOpen && (
                   <div className="absolute right-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg">
+                    <div className="w-full px-6 py-2">
+                      <span className="block font-semibold text-gray-700">
+                        MyAccount
+                      </span>
+                    </div>
+
                     <NavLink
                       to="/my-profile"
                       className="block px-6 py-2 hover:bg-gray-100"
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
                       MyProfile
+                    </NavLink>
+                    <NavLink
+                      to="/create-trip"
+                      className="block px-6 py-2 hover:bg-gray-100"
+                      onClick={() => setIsProfileMenuOpen(false)}
+                    >
+                      CreateTrip
                     </NavLink>
                     <button
                       onClick={() => {
@@ -77,8 +90,16 @@ const Header = () => {
               </div>
             )}
             {/* Mobile Menu Icon */}
-            <button onClick={toggleMenu} aria-label="Toggle Menu" className="focus:outline-none">
-              {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            <button
+              onClick={toggleMenu}
+              aria-label="Toggle Menu"
+              className="focus:outline-none"
+            >
+              {menuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
 
@@ -88,8 +109,8 @@ const Header = () => {
               to="/"
               className={({ isActive }) =>
                 isActive
-                  ? 'text-purple-200 font-bold transition'
-                  : 'text-white hover:text-purple-200 transition'
+                  ? "text-purple-200 font-bold transition"
+                  : "text-white hover:text-purple-200 transition"
               }
             >
               Home
@@ -98,8 +119,8 @@ const Header = () => {
               to="/create-trip"
               className={({ isActive }) =>
                 isActive
-                  ? 'text-purple-200 font-bold transition'
-                  : 'text-white hover:text-purple-200 transition'
+                  ? "text-purple-200 font-bold transition"
+                  : "text-white hover:text-purple-200 transition"
               }
             >
               Plan Trip
@@ -108,8 +129,8 @@ const Header = () => {
               to="/aboutpage"
               className={({ isActive }) =>
                 isActive
-                  ? 'text-purple-200 font-bold transition'
-                  : 'text-white hover:text-purple-200 transition'
+                  ? "text-purple-200 font-bold transition"
+                  : "text-white hover:text-purple-200 transition"
               }
             >
               About
@@ -120,7 +141,11 @@ const Header = () => {
           <div className="hidden md:flex items-center">
             {userData ? (
               <div className="relative">
-                <button onClick={handleProfileToggle} className="flex items-center space-x-2">
+                <button
+                  onClick={handleProfileToggle}
+                  className="flex items-center space-x-2"
+                >
+                  <span className="ml-2 w-full">{userData.name}</span>
                   <img
                     src={userData.image}
                     alt="Profile"
@@ -130,12 +155,24 @@ const Header = () => {
 
                 {isProfileMenuOpen && (
                   <div className="absolute right-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg">
+                    <div className="px-6 py-2">
+                    <span className="block font-semibold text-gray-700">
+                        MyAccount
+                      </span>
+                    </div>
                     <NavLink
                       to="/my-profile"
                       className="block px-6 py-2 hover:bg-gray-100"
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
                       MyProfile
+                    </NavLink>
+                    <NavLink
+                      to="/create-trip"
+                      className="block px-6 py-2 hover:bg-gray-100"
+                      onClick={() => setIsProfileMenuOpen(false)}
+                    >
+                      CreateTrip
                     </NavLink>
                     <button
                       onClick={() => {
@@ -223,4 +260,3 @@ const Header = () => {
 };
 
 export default Header;
-
