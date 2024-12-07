@@ -56,11 +56,7 @@ const Header = () => {
                 </button>
                 {isProfileMenuOpen && (
                   <div className="absolute right-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg">
-                    <div className="w-full px-6 py-2">
-                      <span className="block font-semibold text-gray-700">
-                        MyAccount
-                      </span>
-                    </div>
+                    
 
                     <NavLink
                       to="/my-profile"
@@ -68,6 +64,13 @@ const Header = () => {
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
                       MyProfile
+                    </NavLink>
+                    <NavLink
+                      to="/my-trip"
+                      className="block px-6 py-2 hover:bg-gray-100"
+                      onClick={() => setIsProfileMenuOpen(false)}
+                    >
+                      MyTrips
                     </NavLink>
                     <NavLink
                       to="/create-trip"
@@ -155,17 +158,20 @@ const Header = () => {
 
                 {isProfileMenuOpen && (
                   <div className="absolute right-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg">
-                    <div className="px-6 py-2">
-                    <span className="block font-semibold text-gray-700">
-                        MyAccount
-                      </span>
-                    </div>
+                    
                     <NavLink
                       to="/my-profile"
                       className="block px-6 py-2 hover:bg-gray-100"
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
                       MyProfile
+                    </NavLink>
+                    <NavLink
+                      to="/my-trip"
+                      className="block px-6 py-2 hover:bg-gray-100"
+                      onClick={() => setIsProfileMenuOpen(false)}
+                    >
+                      MyTrips
                     </NavLink>
                     <NavLink
                       to="/create-trip"
