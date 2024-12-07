@@ -7,6 +7,7 @@ import { AppContext } from '../../context/AppContext';
 const Header = () => {
   const { userData, setToken, setUserData } = useContext(AppContext);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -16,10 +17,15 @@ const Header = () => {
     localStorage.removeItem('token');
   };
 
+  const handleProfileToggle = () => {
+    setIsProfileMenuOpen(!isProfileMenuOpen);
+  };
+
   return (
     <header className="relative bg-gradient-to-r from-blue-500 to-purple-500 text-white">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex justify-between items-center">
+          {/* Logo */}
           <div className="flex items-center">
             <svg
               className="h-10 w-10 mr-3"
@@ -36,20 +42,47 @@ const Header = () => {
             </NavLink>
           </div>
 
-          <div className="md:hidden">
-            <button
-              onClick={toggleMenu}
-              aria-label="Toggle Menu"
-              className="focus:outline-none"
-            >
-              {menuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+          {/* Mobile Header Items */}
+          <div className="md:hidden flex items-center space-x-4">
+            {/* Profile Picture & Menu (Mobile Version) */}
+            {userData && (
+              <div className="relative">
+                <button onClick={handleProfileToggle}>
+                  <img
+                    src={userData.image}
+                    alt="Profile"
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                </button>
+                {isProfileMenuOpen && (
+                  <div className="absolute right-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg">
+                    <NavLink
+                      to="/my-profile"
+                      className="block px-6 py-2 hover:bg-gray-100"
+                      onClick={() => setIsProfileMenuOpen(false)}
+                    >
+                      MyProfile
+                    </NavLink>
+                    <button
+                      onClick={() => {
+                        setIsProfileMenuOpen(false);
+                        handleLogout();
+                      }}
+                      className="block w-full px-6 py-2 text-left text-red-500 hover:bg-gray-100"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+            {/* Mobile Menu Icon */}
+            <button onClick={toggleMenu} aria-label="Toggle Menu" className="focus:outline-none">
+              {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
 
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
             <NavLink
               to="/"
@@ -83,20 +116,38 @@ const Header = () => {
             </NavLink>
           </nav>
 
+          {/* Desktop Profile Section */}
           <div className="hidden md:flex items-center">
             {userData ? (
-              <div className="flex items-center space-x-4">
-                <img
-                  src={userData.image}
-                  alt="Profile"
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-                <button
-                  onClick={handleLogout}
-                  className="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
-                >
-                  Logout
+              <div className="relative">
+                <button onClick={handleProfileToggle} className="flex items-center space-x-2">
+                  <img
+                    src={userData.image}
+                    alt="Profile"
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
                 </button>
+
+                {isProfileMenuOpen && (
+                  <div className="absolute right-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg">
+                    <NavLink
+                      to="/my-profile"
+                      className="block px-6 py-2 hover:bg-gray-100"
+                      onClick={() => setIsProfileMenuOpen(false)}
+                    >
+                      MyProfile
+                    </NavLink>
+                    <button
+                      onClick={() => {
+                        setIsProfileMenuOpen(false);
+                        handleLogout();
+                      }}
+                      className="block px-6 py-2 text-red-500 hover:bg-gray-100"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
               <>
@@ -118,6 +169,7 @@ const Header = () => {
           </div>
         </div>
 
+        {/* Mobile Menu */}
         {menuOpen && (
           <nav className="md:hidden mt-4 bg-white text-gray-800 rounded-lg shadow-lg">
             <NavLink
@@ -142,19 +194,7 @@ const Header = () => {
               About
             </NavLink>
             <div className="border-t mt-2">
-              {userData ? (
-                <>
-                  <button
-                    onClick={() => {
-                      setMenuOpen(false);
-                      handleLogout();
-                    }}
-                    className="block w-full px-4 py-2 text-center text-red-500 hover:bg-gray-100"
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
+              {!userData && (
                 <>
                   <NavLink to="/signup">
                     <Button
@@ -183,3 +223,4 @@ const Header = () => {
 };
 
 export default Header;
+

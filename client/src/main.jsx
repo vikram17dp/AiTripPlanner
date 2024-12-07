@@ -13,6 +13,7 @@ import AppContextProvider from "./context/AppContext";
 import SignUp from "./authentication/SignUp";
 import PublicRoute from "./authentication/PublicRoute ";
 import ProtectedRoute from "./authentication/ProtectedRoute";
+import ProfilePage from "./authentication/ProfilePage";
 
 
 const router = createBrowserRouter([
@@ -65,14 +66,13 @@ const router = createBrowserRouter([
       </>
     ),
   },
-  // Add any protected routes below
   {
-    path: "/profile",
+    path: "/my-profile",
     element: (
       <>
         <Header />
         <ProtectedRoute>
-          {/* <ProfilePage /> */}
+          <ProfilePage />
         </ProtectedRoute>
       </>
     ),

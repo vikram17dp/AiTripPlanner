@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { FiMail, FiLock, FiUser } from 'react-icons/fi';
+import { toast } from 'react-hot-toast';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -21,18 +22,19 @@ const SignUp = () => {
         password,
       });
       if (response.data.success) {
+        toast.success('Sign up successful!');
         navigate('/signin');
       } else {
         console.error(response.data.message || 'Sign up failed.');
+        toast.error('Sign up failed');
       }
     } catch (error) {
       console.error(error.response?.data?.message || 'Network error');
+      toast.error('Network error');
     }
   };
 
-  const handleGoogleSignUp = async () => {
-    // Implement Google SignUp logic here if required
-  };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-purple-100 py-12 px-4 sm:px-6 lg:px-8">
@@ -107,16 +109,7 @@ const SignUp = () => {
             </div>
           </div>
 
-          <div className="mt-6">
-            <button
-              type="button"
-              onClick={handleGoogleSignUp}
-              className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
-            >
-              <FcGoogle className="w-5 h-5 mr-2" />
-              <span>Continue with Google</span>
-            </button>
-          </div>
+          
         </div>
 
         <p className="mt-2 text-center text-sm text-gray-600">

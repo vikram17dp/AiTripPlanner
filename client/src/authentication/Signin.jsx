@@ -6,7 +6,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { FiMail, FiLock } from 'react-icons/fi';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { app } from '../../firebase.js';
-
+import { toast } from 'react-hot-toast';
 export default function Signin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,11 +24,14 @@ export default function Signin() {
         localStorage.setItem('token', response.data.token);
         setToken(response.data.token);
         navigate('/');
+        toast.success('Login successful!');
       } else {
         console.error(response.data.message || 'Login failed.');
+        toast.error('Login failed.');
       }
     } catch (error) {
       console.error(error.response?.data?.message || 'Network error');
+      toast.error('Network error');
     }
   };
 
@@ -51,11 +54,14 @@ export default function Signin() {
         setUserData(response.data.user);
         localStorage.setItem('token', response.data.token);
         navigate('/');
+        toast.success('Google login successful!');
       } else {
         console.error(response.data.message);
+        toast.error('Google login failed');
       }
     } catch (error) {
       console.error('Google login failed');
+      toast.error('Google login failed');
     }
   };
 
