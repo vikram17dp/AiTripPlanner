@@ -5,7 +5,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { FiMail, FiLock } from 'react-icons/fi';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { app } from '../../firebase.js';
 import { toast } from 'react-hot-toast';
 export default function Signin() {
   const [email, setEmail] = useState('');

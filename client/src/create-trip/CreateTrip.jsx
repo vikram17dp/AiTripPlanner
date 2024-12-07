@@ -1,12 +1,12 @@
-
-
+import React, { useState, useEffect } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { AI_PROMPT, SelectBudgetOptions, SelectNoOfPersons } from "@/constants/Options"
-import React, { useState, useEffect } from "react"
+import { AI_PROMPT, SelectBudgetOptions, SelectNoOfPersons } from "@/constants/options"
 import { Search, Loader2 } from 'lucide-react'
 import { toast } from "sonner"
 import { GoogleGenerativeAI } from "@google/generative-ai"
+import { doc, setDoc } from "firebase/firestore"
+import { db } from "./firebase"
 
 const CreateTrip = () => {
   const tomTomApiKey = import.meta.env.VITE_TOM_TOM_API_KEY;
@@ -60,49 +60,66 @@ const CreateTrip = () => {
 
   const handleSubmit = async () => {
     if (!inputValue || !days || selectedBudget === null || selectedPersons === null) {
-      toast.error("Please fill all details before submitting.")
-      return
+      toast.error("Please fill all details before submitting.");
+      return;
     }
-
+  
     if (parseInt(days) > 5) {
-      toast.error("You cannot plan a trip for more than 5 days.")
-      return
+      toast.error("You cannot plan a trip for more than 5 days.");
+      return;
     }
-
+  
     const tripData = {
       destination: inputValue,
       days,
       budget: SelectBudgetOptions[selectedBudget],
       persons: SelectNoOfPersons[selectedPersons],
-    }
-
+    };
+  
     const FINAL_PROMPT = AI_PROMPT
       .replace("{location}", tripData.destination)
       .replace("{noOfDays}", tripData.days)
       .replace("{People}", tripData.persons.title)
-      .replace("{Budget}", tripData.budget.title)
-
-    console.log("Final Prompt:", FINAL_PROMPT)
-
+      .replace("{Budget}", tripData.budget.title);
+  
+    console.log("Final Prompt:", FINAL_PROMPT);
+  
     try {
-      setLoading(true)
-      const genAI = new GoogleGenerativeAI(geminiApiKey)
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" })
-
-      const result = await model.generateContent(FINAL_PROMPT)
-      const response = await result.response
-      const text = response.text()
-      console.log("AI Response:", text)
-
-      
-      toast.success("Trip planned successfully!")
+      setLoading(true);
+      const genAI = new GoogleGenerativeAI(geminiApiKey);
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+  
+      const result = await model.generateContent(FINAL_PROMPT);
+      const response = await result.response;
+      const text = response.text();
+      console.log("AI Response:", text);
+  
+      await onGenerateTrip(tripData);
+  
+      toast.success("Trip planned successfully!");
     } catch (error) {
-      console.error("Error generating trip:", error)
-      toast.error("Failed to plan trip. Please try again.")
+      console.error("Error generating trip:", error);
+      toast.error("Failed to plan trip. Please try again.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
+  
+  const onGenerateTrip = async (tripData) => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}')
+    const docId = Date.now().toString(); 
+    try {
+      await setDoc(doc(db, "AiTrips", docId), {
+        userSelection: tripData,
+        tripData: tripData,
+        userId: user.uid,
+      });
+      toast.success("Trip saved to Firestore successfully!");
+    } catch (error) {
+      console.error("Error saving trip data:", error);
+      toast.error("Failed to save trip data.");
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
