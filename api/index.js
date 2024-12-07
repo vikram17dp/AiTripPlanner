@@ -3,9 +3,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/mongodb.js";
-import connectCloudinary from "./config/cloudinary.js";
 import userRouter from "./routes/user.route.js";
-
+import connectCloudinary from './config/cloudinary.js'
 const app = express();
 app.use(express.json());
 dotenv.config();
