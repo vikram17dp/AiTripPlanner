@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Map, Clock, Sparkles, Users } from 'lucide-react'
+import { NavLink } from 'react-router-dom'
 
 const AboutPage = () => {
   return (
@@ -13,9 +14,11 @@ const AboutPage = () => {
           We combine cutting-edge artificial intelligence with comprehensive travel data to craft 
           the perfect trip tailored to your preferences.
         </p>
-        <Button className="mt-4">
+       <NavLink to={'/create-trip'}>
+       <Button className="mt-4">
           Start Planning <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
+       </NavLink>
       </section>
 
       <section className="mb-12">
@@ -62,9 +65,11 @@ const AboutPage = () => {
           travel planning. Create your personalized itinerary in minutes and start exploring 
           the world your way.
         </p>
-        <Button size="lg">
+       <NavLink to={'/create-trip'}>
+       <Button size="lg">
           Plan Your Dream Trip Now <ArrowRight className="ml-2 h-5 w-5" />
         </Button>
+       </NavLink>
       </section>
     </div>
   )
