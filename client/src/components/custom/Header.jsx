@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Button } from '../ui/button';
-import { Menu, X } from 'lucide-react'; 
+import { Menu, X } from 'lucide-react';
+import { AppContext } from '../../context/AppContext';
 
 const Header = () => {
+  const { userData, setToken, setUserData } = useContext(AppContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
+
+  const handleLogout = () => {
+    setToken(false);
+    setUserData(false);
+    localStorage.removeItem('token');
+  };
 
   return (
     <header className="relative bg-gradient-to-r from-blue-500 to-purple-500 text-white">
@@ -76,19 +84,37 @@ const Header = () => {
           </nav>
 
           <div className="hidden md:flex items-center">
-            <NavLink to="/signup">
-              <Button variant="secondary" className="mr-4">
-                Sign Up
-              </Button>
-            </NavLink>
-            <NavLink to="/signin">
-              <Button
-                variant="outline"
-                className="bg-white text-purple-600 hover:bg-purple-100"
-              >
-                Sign In
-              </Button>
-            </NavLink>
+            {userData ? (
+              <div className="flex items-center space-x-4">
+                <img
+                  src={userData.image}
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <button
+                  onClick={handleLogout}
+                  className="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <>
+                <NavLink to="/signup">
+                  <Button variant="secondary" className="mr-4">
+                    Sign Up
+                  </Button>
+                </NavLink>
+                <NavLink to="/signin">
+                  <Button
+                    variant="outline"
+                    className="bg-white text-purple-600 hover:bg-purple-100"
+                  >
+                    Sign In
+                  </Button>
+                </NavLink>
+              </>
+            )}
           </div>
         </div>
 
@@ -116,22 +142,38 @@ const Header = () => {
               About
             </NavLink>
             <div className="border-t mt-2">
-              <NavLink to="/signup">
-                <Button
-                  variant="secondary"
-                  className="block w-full px-4 py-2 text-center bg-slate-500 text-white mt-2 hover:bg-purple-600"
-                >
-                  Sign Up
-                </Button>
-              </NavLink>
-              <NavLink to="/signin">
-                <Button
-                  variant="outline"
-                  className="block w-full px-4 py-2 text-center bg-slate-500 text-white mt-2 hover:bg-purple-600"
-                >
-                  Sign In
-                </Button>
-              </NavLink>
+              {userData ? (
+                <>
+                  <button
+                    onClick={() => {
+                      setMenuOpen(false);
+                      handleLogout();
+                    }}
+                    className="block w-full px-4 py-2 text-center text-red-500 hover:bg-gray-100"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <NavLink to="/signup">
+                    <Button
+                      variant="secondary"
+                      className="block w-full px-4 py-2 text-center bg-slate-500 text-white mt-2 hover:bg-purple-600"
+                    >
+                      Sign Up
+                    </Button>
+                  </NavLink>
+                  <NavLink to="/signin">
+                    <Button
+                      variant="outline"
+                      className="block w-full px-4 py-2 text-center bg-slate-500 text-white mt-2 hover:bg-purple-600"
+                    >
+                      Sign In
+                    </Button>
+                  </NavLink>
+                </>
+              )}
             </div>
           </nav>
         )}

@@ -10,6 +10,7 @@ import { Toaster } from "./components/ui/sonner";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Signin from "./authentication/Signin";
 import AppContextProvider from "./context/AppContext";
+import SignUp from "./authentication/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,15 @@ const router = createBrowserRouter([
       <>
         <Header />
         <Signin/>
+      </>
+    ),
+  },
+  {
+    path: "/signup",
+    element: (
+      <>
+        <Header />
+        <SignUp/>
       </>
     ),
   },
