@@ -11,6 +11,9 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import Signin from "./authentication/Signin";
 import AppContextProvider from "./context/AppContext";
 import SignUp from "./authentication/SignUp";
+import PublicRoute from "./authentication/PublicRoute ";
+import ProtectedRoute from "./authentication/ProtectedRoute";
+
 
 const router = createBrowserRouter([
   {
@@ -36,7 +39,7 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
-        <AboutPage/>
+        <AboutPage />
       </>
     ),
   },
@@ -45,7 +48,9 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
-        <Signin/>
+        <PublicRoute>
+          <Signin />
+        </PublicRoute>
       </>
     ),
   },
@@ -54,19 +59,31 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
-        <SignUp/>
+        <PublicRoute>
+          <SignUp />
+        </PublicRoute>
       </>
     ),
   },
-  
+  // Add any protected routes below
+  {
+    path: "/profile",
+    element: (
+      <>
+        <Header />
+        <ProtectedRoute>
+          {/* <ProfilePage /> */}
+        </ProtectedRoute>
+      </>
+    ),
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <AppContextProvider>
-
     <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>
-    <RouterProvider router={router} />
-    <Toaster />
-    </GoogleOAuthProvider>;
+      <RouterProvider router={router} />
+      <Toaster />
+    </GoogleOAuthProvider>
   </AppContextProvider>
 );
