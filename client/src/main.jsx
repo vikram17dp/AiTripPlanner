@@ -14,7 +14,7 @@ import SignUp from "./authentication/SignUp";
 import PublicRoute from "./authentication/PublicRoute ";
 import ProtectedRoute from "./authentication/ProtectedRoute";
 import ProfilePage from "./authentication/ProfilePage";
-
+import Viewtrip from './view-trip/[tripid]/Index'
 
 const router = createBrowserRouter([
   {
@@ -63,6 +63,15 @@ const router = createBrowserRouter([
         <PublicRoute>
           <SignUp />
         </PublicRoute>
+      </>
+    ),
+  },
+  {
+    path: "/view-trip/:tripid",
+    element: (
+      <>
+        <Header />
+        <Viewtrip/>
       </>
     ),
   },

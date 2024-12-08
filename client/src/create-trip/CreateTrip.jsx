@@ -10,6 +10,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai"
 import { doc, setDoc } from "firebase/firestore"
 import { db } from "./firebase"
 import { chatSession } from "@/service/AiModel"
+import { useNavigate } from "react-router-dom"
 
 const CreateTrip = () => {
   const tomTomApiKey = import.meta.env.VITE_TOM_TOM_API_KEY;
@@ -21,7 +22,7 @@ const CreateTrip = () => {
   const [selectedBudget, setSelectedBudget] = useState(null)
   const [formData, setFormData] = useState([]);
   const [selectedPersons, setSelectedPersons] = useState(null)
-
+  const navigate = useNavigate();
   useEffect(() => {
     const script = document.createElement("script")
     script.src = `https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.15.0/maps/maps-web.min.js?key=${tomTomApiKey}`
@@ -86,8 +87,8 @@ const CreateTrip = () => {
       .replace("{People}", tripData.persons.title)
       .replace("{Budget}", tripData.budget.title)
 
-    console.log("Final Prompt:", FINAL_PROMPT)
-    console.log("Gemini API Key:", import.meta.env.VITE_GEMINI_API_KEY);
+    // console.log("Final Prompt:", FINAL_PROMPT)
+    // console.log("Gemini API Key:", import.meta.env.VITE_GEMINI_API_KEY);
     try {
       setLoading(true)
       const result = await chatSession.sendMessage(FINAL_PROMPT)
@@ -110,11 +111,12 @@ const CreateTrip = () => {
       const user = JSON.parse(localStorage.getItem('user'));
       const docId = Date.now().toString()
       await setDoc(doc(db,"AiTrips",docId),{
-        userSelection:JSON.parse(TripData),
-        tripData:JSON.parse(TripData),
+        userSelection:TripData,
+        tripData:TripData,
         userEmail:user?.email,
         id:docId
       })
+      navigate('/view-trip/'+docId)
   }
 
   return (
