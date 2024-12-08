@@ -110,8 +110,8 @@ const CreateTrip = () => {
       const user = JSON.parse(localStorage.getItem('user'));
       const docId = Date.now().toString()
       await setDoc(doc(db,"AiTrips",docId),{
-        userSelection:TripData,
-        tripData:TripData,
+        userSelection:JSON.parse(TripData),
+        tripData:JSON.parse(TripData),
         userEmail:user?.email,
         id:docId
       })
