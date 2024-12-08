@@ -2,11 +2,11 @@ import { doc, getDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'sonner';
-import InformationSection from '../components/InformationSection';
-import ItinerarySection from '../components/ItinerarySection ';
+import InformationSection from './InformationSection';
+import ItinerarySection from './ItinerarySection ';
 import { db } from '@/create-trip/firebase';
-import { HotelSection } from '../components/HotelSection';
-import TripDetails from '../components/TripDetails';
+import { HotelSection } from './HotelSection';
+import TripDetails from './TripDetails';
 
 
 const ViewTrip = () => {
@@ -24,9 +24,19 @@ const ViewTrip = () => {
       console.log("Fetching trip data...");
       const docRef = doc(db, 'AiTrips', tripid);
       const docSnap = await getDoc(docRef);
+  
       if (docSnap.exists()) {
-        const tripData = docSnap.data();
+        let tripData = docSnap.data();
         console.log("Document data:", tripData);
+  
+        if (typeof tripData.tripData === 'string') {
+          tripData.tripData = JSON.parse(tripData.tripData);
+        }
+  
+        if (typeof tripData.userSelection === 'string') {
+          tripData.userSelection = JSON.parse(tripData.userSelection);
+        }
+  
         setTrip(tripData);
       } else {
         console.log("No such document");
