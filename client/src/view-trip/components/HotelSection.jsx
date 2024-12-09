@@ -33,7 +33,7 @@ export const HotelSection = ({ hotels }) => {
                   </p>
 
                   <a 
-                    href={hotel.locationMap || "#"} 
+                    href={hotel.locationInMap  ? `https://www.google.com/maps/search/?q=${hotel.locationInMap }` : "#"} 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="text-blue-500 hover:underline"

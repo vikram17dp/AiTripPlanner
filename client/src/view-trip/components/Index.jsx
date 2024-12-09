@@ -21,13 +21,13 @@ const ViewTrip = () => {
 
   const getTripData = async () => {
     try {
-      console.log("Fetching trip data...");
+      // console.log("Fetching trip data...");
       const docRef = doc(db, 'AiTrips', tripid);
       const docSnap = await getDoc(docRef);
   
       if (docSnap.exists()) {
         let tripData = docSnap.data();
-        console.log("Document data:", tripData);
+        // console.log("Document data:", tripData);
   
         if (typeof tripData.tripData === 'string') {
           tripData.tripData = JSON.parse(tripData.tripData);

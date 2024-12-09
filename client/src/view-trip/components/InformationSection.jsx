@@ -1,7 +1,11 @@
 import React from 'react';
 
 const InformationSection = ({ trip }) => {
-  const imageUrl = trip?.userSelection?.tripDetails?.imageUrl || '/tour.webp';
+  const imageUrl = 
+  trip?.userSelection?.tripDetails?.imageUrl?.trim() 
+    ? trip.userSelection.tripDetails.imageUrl 
+    : '/tour.webp';
+
 
   return (
     <div>
@@ -25,7 +29,7 @@ const InformationSection = ({ trip }) => {
           </h2>
 
           <h2 className="p-2 px-4 bg-gray-200 rounded-full text-gray-500">
-          🤝No. of travelers {trip?.userSelection?.tripDetails?.travelers}  
+          🤝No. of travelers: {trip?.userSelection?.tripDetails?.travelers}  
           </h2>
         </div>
       </div>

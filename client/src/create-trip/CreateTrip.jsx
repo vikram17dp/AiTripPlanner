@@ -95,7 +95,7 @@ const CreateTrip = () => {
       const response = await result.response
       const text = response.text()
       SaveTrip(result?.response?.text())
-      console.log("AI Response:", text)
+      // console.log("AI Response:", text)
 
       
       toast.success("Trip planned successfully!")
