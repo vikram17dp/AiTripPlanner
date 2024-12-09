@@ -15,6 +15,7 @@ import PublicRoute from "./authentication/PublicRoute ";
 import ProtectedRoute from "./authentication/ProtectedRoute";
 import ProfilePage from "./authentication/ProfilePage";
 import ViewTrip from "./view-trip/components/Index";
+import MyTrips from "./my-trips/MyTrips";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,15 @@ const router = createBrowserRouter([
       <>
         <Header />
         <ViewTrip/>
+      </>
+    ),
+  },
+  {
+    path: "/my-trips",
+    element: (
+      <>
+        <Header />
+        <MyTrips/>
       </>
     ),
   },

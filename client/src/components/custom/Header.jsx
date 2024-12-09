@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Menu, X } from "lucide-react";
 import { AppContext } from "../../context/AppContext";
+import ProtectedRoute from "@/authentication/ProtectedRoute";
 
 const Header = () => {
   const { userData, setToken, setUserData } = useContext(AppContext);
@@ -64,7 +65,7 @@ const Header = () => {
                       MyProfile
                     </NavLink>
                     <NavLink
-                      to="/my-trip"
+                      to="/my-trips"
                       className="block px-6 py-2 hover:bg-gray-100"
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
@@ -126,6 +127,8 @@ const Header = () => {
             >
               Plan Trip
             </NavLink>
+            <ProtectedRoute>
+
             <Link
               to={"https://techy-blog.onrender.com/"}
               className={({ isActive }) =>
@@ -136,6 +139,7 @@ const Header = () => {
             >
               Traveling Blog
             </Link>
+            </ProtectedRoute>
             <NavLink
               to="/aboutpage"
               className={({ isActive }) =>
@@ -178,7 +182,7 @@ const Header = () => {
                       MyProfile
                     </NavLink>
                     <NavLink
-                      to="/my-trip"
+                      to="/my-trips"
                       className="block px-6 py-2 hover:bg-gray-100"
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
@@ -240,12 +244,15 @@ const Header = () => {
             >
               Plan Trip
             </NavLink>
+            <ProtectedRoute>
+
             <Link
               to={"https://techy-blog.onrender.com/"}
               className="block px-4 py-2 hover:bg-gray-100"
             >
               Traveling Blog
             </Link>
+            </ProtectedRoute>
             <NavLink
               to="/aboutpage"
               onClick={() => setMenuOpen(false)}
