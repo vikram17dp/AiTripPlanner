@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Menu, X } from "lucide-react";
 import { AppContext } from "../../context/AppContext";
@@ -56,8 +56,6 @@ const Header = () => {
                 </button>
                 {isProfileMenuOpen && (
                   <div className="absolute right-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg">
-                    
-
                     <NavLink
                       to="/my-profile"
                       className="block px-6 py-2 hover:bg-gray-100"
@@ -128,6 +126,16 @@ const Header = () => {
             >
               Plan Trip
             </NavLink>
+            <Link
+              to={"https://techy-blog.onrender.com/"}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-purple-200 font-bold transition"
+                  : "text-white hover:text-purple-200 transition"
+              }
+            >
+              Traveling Blog
+            </Link>
             <NavLink
               to="/aboutpage"
               className={({ isActive }) =>
@@ -148,17 +156,20 @@ const Header = () => {
                   onClick={handleProfileToggle}
                   className="flex items-center space-x-2"
                 >
-                  <span className="ml-2 w-full">{userData.name}</span>
+                  <div className="flex items-center space-x-4 border border-gray-300 p-1 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 bg-black-400">
+                    <span className="font-semibold text-lg hover:text-green-500">
+                      {userData.name}
+                    </span>
+                  </div>
                   <img
                     src={userData.image}
                     alt="Profile"
-                    className="w-10 h-10 rounded-full object-cover"
+                    className="w-10 h-10  rounded-full object-cover"
                   />
                 </button>
 
                 {isProfileMenuOpen && (
                   <div className="absolute right-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg">
-                    
                     <NavLink
                       to="/my-profile"
                       className="block px-6 py-2 hover:bg-gray-100"
@@ -229,6 +240,12 @@ const Header = () => {
             >
               Plan Trip
             </NavLink>
+            <Link
+              to={"https://techy-blog.onrender.com/"}
+              className="block px-4 py-2 hover:bg-gray-100"
+            >
+              Traveling Blog
+            </Link>
             <NavLink
               to="/aboutpage"
               onClick={() => setMenuOpen(false)}
