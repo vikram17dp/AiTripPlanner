@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Menu, X } from "lucide-react";
 import { AppContext } from "../../context/AppContext";
@@ -9,14 +9,17 @@ const Header = () => {
   const { userData, setToken, setUserData } = useContext(AppContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-
+const navigate = useNavigate()
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   const handleLogout = () => {
-    setToken(false);
-    setUserData(false);
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setToken(null);
+    setUserData(null);
+    navigate('/signin'); 
   };
+  
 
   const handleProfileToggle = () => {
     setIsProfileMenuOpen(!isProfileMenuOpen);
@@ -127,19 +130,15 @@ const Header = () => {
             >
               Plan Trip
             </NavLink>
-            <ProtectedRoute>
+            {userData && (
+              <Link
+                to={"https://techy-blog.onrender.com/"}
+                className="text-white hover:text-purple-200 transition"
+              >
+                Traveling Blog
+              </Link>
+            )}
 
-            <Link
-              to={"https://techy-blog.onrender.com/"}
-              className={({ isActive }) =>
-                isActive
-                  ? "text-purple-200 font-bold transition"
-                  : "text-white hover:text-purple-200 transition"
-              }
-            >
-              Traveling Blog
-            </Link>
-            </ProtectedRoute>
             <NavLink
               to="/aboutpage"
               className={({ isActive }) =>
@@ -244,15 +243,16 @@ const Header = () => {
             >
               Plan Trip
             </NavLink>
-            <ProtectedRoute>
 
-            <Link
-              to={"https://techy-blog.onrender.com/"}
-              className="block px-4 py-2 hover:bg-gray-100"
-            >
-              Traveling Blog
-            </Link>
-            </ProtectedRoute>
+            {userData && (
+              <Link
+                to={"https://techy-blog.onrender.com/"}
+                className="text-white hover:text-purple-200 transition"
+              >
+                Traveling Blog
+              </Link>
+            )}
+
             <NavLink
               to="/aboutpage"
               onClick={() => setMenuOpen(false)}

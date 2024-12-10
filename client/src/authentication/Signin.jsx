@@ -6,6 +6,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { FiMail, FiLock } from 'react-icons/fi';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { toast } from 'react-hot-toast';
+
 export default function Signin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,18 +21,30 @@ export default function Signin() {
         password,
       });
       if (response.data.success) {
-        const { token, user } = response.data;
+        const { token } = response.data;
         localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
         setToken(token);
-        setUserData(user); 
+        
+      
+        try {
+          const userResponse = await axios.get(`${backendUrl}/api/user/get-profile`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          if (userResponse.data.success) {
+            const user = userResponse.data.userData;
+            localStorage.setItem('user', JSON.stringify(user));
+            setUserData(user);
+          }
+        } catch (userError) {
+          console.error('Error fetching user data:', userError);
+        }
+
         navigate('/');
         toast.success('Login successful!');
       } else {
         console.error(response.data.message || 'Login failed.');
         toast.error('Login failed.');
       }
-      
     } catch (error) {
       console.error(error.response?.data?.message || 'Network error');
       toast.error('Network error');
@@ -64,12 +77,12 @@ export default function Signin() {
         console.error(response.data.message);
         toast.error('Google login failed');
       }
-      
     } catch (error) {
       console.error('Google login failed');
       toast.error('Google login failed');
     }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-purple-100 py-12 px-4 sm:px-6 lg:px-8">
@@ -153,3 +166,4 @@ export default function Signin() {
     </div>
   );
 }
+
