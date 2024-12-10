@@ -20,14 +20,18 @@ export default function Signin() {
         password,
       });
       if (response.data.success) {
-        localStorage.setItem('token', response.data.token);
-        setToken(response.data.token);
+        const { token, user } = response.data;
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+        setToken(token);
+        setUserData(user); 
         navigate('/');
         toast.success('Login successful!');
       } else {
         console.error(response.data.message || 'Login failed.');
         toast.error('Login failed.');
       }
+      
     } catch (error) {
       console.error(error.response?.data?.message || 'Network error');
       toast.error('Network error');
@@ -49,15 +53,18 @@ export default function Signin() {
       });
 
       if (response.data.success) {
-        setToken(response.data.token);
-        setUserData(response.data.user);
-        localStorage.setItem('token', response.data.token);
+        const { token, user } = response.data;
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user)); 
+        setToken(token);
+        setUserData(user); 
         navigate('/');
         toast.success('Google login successful!');
       } else {
         console.error(response.data.message);
         toast.error('Google login failed');
       }
+      
     } catch (error) {
       console.error('Google login failed');
       toast.error('Google login failed');
