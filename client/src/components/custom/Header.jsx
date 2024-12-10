@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import { Menu, X } from "lucide-react";
 import { AppContext } from "../../context/AppContext";
 import ProtectedRoute from "@/authentication/ProtectedRoute";
+import { toast } from "sonner"
 
 const Header = () => {
   const { userData, setToken, setUserData } = useContext(AppContext);
@@ -18,6 +19,7 @@ const navigate = useNavigate()
     setToken(null);
     setUserData(null);
     navigate('/signin'); 
+    toast.success("Logout successfull!")
   };
   
 

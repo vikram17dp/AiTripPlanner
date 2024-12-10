@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { FiMail, FiLock, FiUser } from 'react-icons/fi';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 
 const SignUp = () => {
   const [name, setName] = useState('');

@@ -1,5 +1,4 @@
 
-
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { AI_PROMPT, SelectBudgetOptions, SelectNoOfPersons } from "@/constants/Options"

@@ -59,7 +59,7 @@ const MyTrips = () => {
         });
 
         setUserTrips(tripsData);
-        console.log("Trips data fetched:", tripsData);
+        // console.log("Trips data fetched:", tripsData);
       }
     } catch (error) {
       console.error("Error fetching user trips:", error);

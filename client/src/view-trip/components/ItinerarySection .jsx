@@ -42,7 +42,6 @@ const ItinerarySection = ({ itinerary = {} }) => {
                         <p className="text-sm text-gray-500">
                           ⏰ <span className="font-bold">Timings:</span> {place.timings || 'Timings not available'}
                         </p>
-                        {/* Display the "View on Map" link */}
                         <a 
                           href={googleMapsUrl} 
                           target="_blank" 
