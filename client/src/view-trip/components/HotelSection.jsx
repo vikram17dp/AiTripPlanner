@@ -15,7 +15,7 @@ export const HotelSection = ({ hotels }) => {
               : `https://www.google.com/maps/search/?q=${encodeURIComponent(hotel.locationInMap || hotel.location || '')}`;
 
             return (
-              <div key={index} className="border rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:shadow-lg hover:scale-[1.02]">
+              <div key={index} className="border rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:shadow-lg hover:scale-[1.02] ">
                 <div className="flex flex-col sm:flex-row">
                   <div className="w-full sm:w-4/6 h-48 sm:h-auto p-4">
                     <img 
@@ -24,7 +24,7 @@ export const HotelSection = ({ hotels }) => {
                       className="w-full h-full object-cover rounded-lg"
                     />
                   </div>
-                  <div className="w-full sm:w-3/5 p-4 sm:p-6">
+                  <div className="w-full sm:w-3/5 p-4 sm:p-6 ">
                     <h3 className="text-lg sm:text-xl font-semibold mb-2 ">{hotel.hotelName || "Hotel Name not available"}</h3>
                     <p className="text-gray-600 mb-4 text-sm line-clamp-2">{hotel.description || "Description not available"}</p>
 
