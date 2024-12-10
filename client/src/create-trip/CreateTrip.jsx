@@ -107,17 +107,28 @@ const CreateTrip = () => {
     }
   }
 
-  const SaveTrip = async(TripData)=>{
-      const user = JSON.parse(localStorage.getItem('user'));
-      const docId = Date.now().toString()
-      await setDoc(doc(db,"AiTrips",docId),{
-        userSelection:TripData,
-        tripData:TripData,
-        userEmail:user?.email,
-        id:docId
-      })
-      navigate('/view-trip/'+docId)
-  }
+  const SaveTrip = async (TripData) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+  
+    console.log('User:', user);
+  
+    if (!user || !user.email) {
+      toast.error("User email not found. Please log in again.");
+      return;
+    }
+  
+    const docId = Date.now().toString();
+  
+    await setDoc(doc(db, "AiTrips", docId), {
+      userSelection: TripData,
+      tripData: TripData,
+      userEmail: user.email, 
+      id: docId
+    });
+  
+    navigate('/view-trip/' + docId);
+  };
+  
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">

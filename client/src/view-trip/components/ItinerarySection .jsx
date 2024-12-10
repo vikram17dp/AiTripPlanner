@@ -18,7 +18,7 @@ const ItinerarySection = ({ itinerary = {} }) => {
                     const imageUrl = place.imageUrl || '/tour.webp';
                     const { latitude, longitude } = place.location || {};
 
-                    // Construct Google Maps URL if both latitude and longitude are available
+                  
                     const googleMapsUrl = latitude && longitude 
                       ? `https://www.google.com/maps/search/?q=${latitude},${longitude}`
                       : '#';

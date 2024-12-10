@@ -13,7 +13,7 @@ const TripDetails = ({ tripDetails = {} }) => {
       <h2 className="text-2xl font-bold mb-4">Trip Details</h2>
       <div className="space-y-4">
         <div className="flex items-center gap-4">
-          <p className="text-lg font-medium">📍Destination:</p>
+          <p className="text-lg font-medium">Destination:</p>
           <p className="text-sm text-gray-600">{destination}</p>
         </div>
 
