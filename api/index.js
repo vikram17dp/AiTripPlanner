@@ -14,7 +14,7 @@ connectCloudinary();
 const port = process.env.PORT || 4000;
 
 app.use(cors({
-  origin: '*', 
+  origin: 'https://ai-trip-planner-fullstack.vercel.app', 
   methods: ['GET', 'POST'],
   credentials: true,
 }));
