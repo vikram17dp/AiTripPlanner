@@ -14,11 +14,11 @@ connectCloudinary();
 const port = process.env.PORT || 4000;
 
 app.use(cors({
-  origin: 
-  'https://ai-trip-planner-umber.vercel.app',
+  origin: '*', 
   methods: ['GET', 'POST'],
   credentials: true,
 }));
+
 
 app.use("/api/user", userRouter);
 
