@@ -4,5 +4,15 @@
         "source": "/(.*)",
         "destination": "/"
       }
+    ],
+    "routes":[
+      {
+        "src":"/(.*)",
+        "dest":"src/main.jsx",
+        "methods":["GET","POST","DELETE","OPTIONS"],
+        "headers":{
+          "Access-Control-Allow-Origin":"*"
+        }
+      }
     ]
   }
