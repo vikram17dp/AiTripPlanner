@@ -109,7 +109,7 @@ const CreateTrip = () => {
   const SaveTrip = async (TripData) => {
     const user = JSON.parse(localStorage.getItem('user'));
   
-    console.log('User:', user);
+    // console.log('User:', user);
   
     if (!user || !user.email) {
       toast.error("User email not found. Please log in again.");

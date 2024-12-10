@@ -10,7 +10,7 @@ const Hero = () => {
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{backgroundImage: "url('/images/travel-landscape.jpg')"}}
+        style={{backgroundImage: "url('/home.jpg')"}}
         aria-hidden="true"
       ></div>
 
@@ -18,11 +18,11 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-        <h1 className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-red-500 mb-4 sm:mb-6 animate-fade-in-down ">
+        <h1 className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-orange-500 mb-4 sm:mb-6 animate-fade-in-down ">
           Explore Beyond Boundaries:
           <span className="block mt-2 text-yellow-300 drop-shadow-lg">AI-Personalized Travel Itineraries</span>
         </h1>
-        <p className="mt-2 sm:mt-3 text-xs sm:text-base md:text-sm lg:text-sm text-gray-200 max-w-3xl mx-auto animate-fade-in-up font-medium">
+        <p className="mt-2 sm:mt-3 text-sm sm:text-base md:text-sm lg:text-sm text-gray-400  max-w-2xl mx-auto animate-fade-in-up font-medium">
           Embark on extraordinary journeys tailored just for you. Let our AI craft your perfect adventure, blending your dreams with insider knowledge.
         </p>
         <div className="mt-6 sm:mt-8 md:mt-10 animate-pulse">

@@ -2,7 +2,7 @@
 
 import React, { useContext, useState } from "react"
 import { AppContext } from "../context/AppContext"
-import { toast } from "react-hot-toast"  // Changed import
+import { toast } from "sonner" 
 import axios from "axios"
 import { Camera, Mail, Phone, MapPin, User, Calendar, Loader2 } from 'lucide-react'
 

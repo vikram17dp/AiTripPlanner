@@ -1,16 +1,16 @@
 import React, { useContext, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X } from 'lucide-react';
 import { AppContext } from "../../context/AppContext";
-import ProtectedRoute from "@/authentication/ProtectedRoute";
 import { toast } from "sonner"
 
 const Header = () => {
   const { userData, setToken, setUserData } = useContext(AppContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-const navigate = useNavigate()
+  const navigate = useNavigate()
+
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   const handleLogout = () => {
@@ -19,32 +19,25 @@ const navigate = useNavigate()
     setToken(null);
     setUserData(null);
     navigate('/signin'); 
-    toast.success("Logout successfull!")
+    toast.success("Logout successful!")
   };
-  
 
   const handleProfileToggle = () => {
     setIsProfileMenuOpen(!isProfileMenuOpen);
   };
 
   return (
-    <header className="relative bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+    <header className="relative bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white shadow-lg">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center">
-            <svg
-              className="h-10 w-10 mr-3"
-              viewBox="0 0 40 40"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M20 5L4 35H36L20 5Z" fill="white" />
-              <circle cx="20" cy="20" r="6" fill="#4C1D95" />
-              <path d="M20 14V26M14 20H26" stroke="white" strokeWidth="2" />
-            </svg>
             <NavLink to="/" className="cursor-pointer">
-              <span className="text-2xl font-bold">AiTripPlanner</span>
+              <img
+                className="h-12 w-auto mr-3 object-contain transition-transform duration-300 hover:scale-105" 
+                src="/logo1.png"  
+                alt="AiTripPlanner Logo"
+              />
             </NavLink>
           </div>
 
@@ -57,38 +50,38 @@ const navigate = useNavigate()
                   <img
                     src={userData.image}
                     alt="Profile"
-                    className="w-10 h-10 rounded-full object-cover"
+                    className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-md"
                   />
                 </button>
                 {isProfileMenuOpen && (
-                  <div className="absolute right-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg">
+                  <div className="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-xl overflow-hidden">
                     <NavLink
                       to="/my-profile"
-                      className="block px-6 py-2 hover:bg-gray-100"
+                      className="block px-4 py-2 hover:bg-indigo-100 transition duration-150 text-sm"
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
-                      MyProfile
+                      My Profile
                     </NavLink>
                     <NavLink
                       to="/my-trips"
-                      className="block px-6 py-2 hover:bg-gray-100"
+                      className="block px-4 py-2 hover:bg-indigo-100 transition duration-150 text-sm"
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
-                      MyTrips
+                      My Trips
                     </NavLink>
                     <NavLink
                       to="/create-trip"
-                      className="block px-6 py-2 hover:bg-gray-100"
+                      className="block px-4 py-2 hover:bg-indigo-100 transition duration-150 text-sm"
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
-                      CreateTrip
+                      Create Trip
                     </NavLink>
                     <button
                       onClick={() => {
                         setIsProfileMenuOpen(false);
                         handleLogout();
                       }}
-                      className="block w-full px-6 py-2 text-left text-red-500 hover:bg-gray-100"
+                      className="block w-full px-4 py-2 text-left text-red-500 hover:bg-red-100 transition duration-150 text-sm"
                     >
                       Logout
                     </button>
@@ -100,7 +93,7 @@ const navigate = useNavigate()
             <button
               onClick={toggleMenu}
               aria-label="Toggle Menu"
-              className="focus:outline-none"
+              className="focus:outline-none transition-transform duration-300 hover:scale-110"
             >
               {menuOpen ? (
                 <X className="w-6 h-6" />
@@ -116,8 +109,8 @@ const navigate = useNavigate()
               to="/"
               className={({ isActive }) =>
                 isActive
-                  ? "text-purple-200 font-bold transition"
-                  : "text-white hover:text-purple-200 transition"
+                  ? "text-yellow-300 font-bold transition duration-300"
+                  : "text-white hover:text-yellow-300 transition duration-300"
               }
             >
               Home
@@ -126,27 +119,26 @@ const navigate = useNavigate()
               to="/create-trip"
               className={({ isActive }) =>
                 isActive
-                  ? "text-purple-200 font-bold transition"
-                  : "text-white hover:text-purple-200 transition"
+                  ? "text-yellow-300 font-bold transition duration-300"
+                  : "text-white hover:text-yellow-300 transition duration-300"
               }
             >
               Plan Trip
             </NavLink>
             {userData && (
               <Link
-                to={"https://techy-blog.onrender.com/"}
-                className="text-white hover:text-purple-200 transition"
+                to="https://techy-blog.onrender.com/"
+                className="text-white hover:text-yellow-300 transition duration-300"
               >
                 Traveling Blog
               </Link>
             )}
-
             <NavLink
               to="/aboutpage"
               className={({ isActive }) =>
                 isActive
-                  ? "text-purple-200 font-bold transition"
-                  : "text-white hover:text-purple-200 transition"
+                  ? "text-yellow-300 font-bold transition duration-300"
+                  : "text-white hover:text-yellow-300 transition duration-300"
               }
             >
               About
@@ -161,47 +153,47 @@ const navigate = useNavigate()
                   onClick={handleProfileToggle}
                   className="flex items-center space-x-2"
                 >
-                  <div className="flex items-center space-x-4 border border-gray-300 p-1 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 bg-black-400">
-                    <span className="font-semibold text-lg hover:text-green-500">
+                  <div className="flex items-center space-x-4 border border-white/30 p-2 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 bg-white/10 backdrop-blur-sm">
+                    <span className="font-semibold text-lg hover:text-yellow-300 transition duration-300">
                       {userData.name}
                     </span>
                   </div>
                   <img
                     src={userData.image}
                     alt="Profile"
-                    className="w-10 h-10  rounded-full object-cover"
+                    className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-md transition-transform duration-300 hover:scale-105"
                   />
                 </button>
 
                 {isProfileMenuOpen && (
-                  <div className="absolute right-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg">
+                  <div className="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-xl overflow-hidden">
                     <NavLink
                       to="/my-profile"
-                      className="block px-6 py-2 hover:bg-gray-100"
+                      className="block px-4 py-2 hover:bg-indigo-100 transition duration-150 text-sm"
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
-                      MyProfile
+                      My Profile
                     </NavLink>
                     <NavLink
                       to="/my-trips"
-                      className="block px-6 py-2 hover:bg-gray-100"
+                      className="block px-4 py-2 hover:bg-indigo-100 transition duration-150 text-sm"
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
-                      MyTrips
+                      My Trips
                     </NavLink>
                     <NavLink
                       to="/create-trip"
-                      className="block px-6 py-2 hover:bg-gray-100"
+                      className="block px-4 py-2 hover:bg-indigo-100 transition duration-150 text-sm"
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
-                      CreateTrip
+                      Create Trip
                     </NavLink>
                     <button
                       onClick={() => {
                         setIsProfileMenuOpen(false);
                         handleLogout();
                       }}
-                      className="block px-6 py-2 text-red-500 hover:bg-gray-100"
+                      className="block w-full px-4 py-2 text-left text-red-500 hover:bg-red-100 transition duration-150 text-sm"
                     >
                       Logout
                     </button>
@@ -211,14 +203,14 @@ const navigate = useNavigate()
             ) : (
               <>
                 <NavLink to="/signup">
-                  <Button variant="secondary" className="mr-4">
+                  <Button variant="secondary" className="mr-4 bg-white text-indigo-600 hover:bg-yellow-300 hover:text-indigo-700 transition duration-300">
                     Sign Up
                   </Button>
                 </NavLink>
                 <NavLink to="/signin">
                   <Button
                     variant="outline"
-                    className="bg-white text-purple-600 hover:bg-purple-100"
+                    className="bg-transparent border-white text-white hover:bg-white hover:text-indigo-600 transition duration-300"
                   >
                     Sign In
                   </Button>
@@ -230,35 +222,34 @@ const navigate = useNavigate()
 
         {/* Mobile Menu */}
         {menuOpen && (
-          <nav className="md:hidden mt-4 bg-white text-gray-800 rounded-lg shadow-lg">
+          <nav className="md:hidden mt-4 bg-white text-gray-800 rounded-lg shadow-xl">
             <NavLink
               to="/"
               onClick={() => setMenuOpen(false)}
-              className="block px-4 py-2 hover:bg-gray-100"
+              className="block px-4 py-2 hover:bg-gray-100 transition duration-150"
             >
               Home
             </NavLink>
             <NavLink
               to="/create-trip"
               onClick={() => setMenuOpen(false)}
-              className="block px-4 py-2 hover:bg-gray-100"
+              className="block px-4 py-2 hover:bg-gray-100 transition duration-150"
             >
               Plan Trip
             </NavLink>
-
             {userData && (
               <Link
-                to={"https://techy-blog.onrender.com/"}
-                className="text-white hover:text-purple-200 transition"
+                to="https://techy-blog.onrender.com/"
+                onClick={() => setMenuOpen(false)}
+                className="block px-4 py-2 hover:bg-gray-100 transition duration-150"
               >
                 Traveling Blog
               </Link>
             )}
-
             <NavLink
               to="/aboutpage"
               onClick={() => setMenuOpen(false)}
-              className="block px-4 py-2 hover:bg-gray-100"
+              className="block px-4 py-2 hover:bg-gray-100 transition duration-150"
             >
               About
             </NavLink>
@@ -268,7 +259,8 @@ const navigate = useNavigate()
                   <NavLink to="/signup">
                     <Button
                       variant="secondary"
-                      className="block w-full px-4 py-2 text-center bg-slate-500 text-white mt-2 hover:bg-purple-600"
+                      className="block w-full px-4 py-2 text-center bg-indigo-600 text-white mt-2 hover:bg-indigo-700 transition duration-300"
+                      onClick={() => setMenuOpen(false)}
                     >
                       Sign Up
                     </Button>
@@ -276,7 +268,8 @@ const navigate = useNavigate()
                   <NavLink to="/signin">
                     <Button
                       variant="outline"
-                      className="block w-full px-4 py-2 text-center bg-slate-500 text-white mt-2 hover:bg-purple-600"
+                      className="block w-full px-4 py-2 text-center bg-transparent border border-indigo-600 text-indigo-600 mt-2 hover:bg-indigo-600 hover:text-white transition duration-300"
+                      onClick={() => setMenuOpen(false)}
                     >
                       Sign In
                     </Button>
@@ -292,3 +285,4 @@ const navigate = useNavigate()
 };
 
 export default Header;
+
