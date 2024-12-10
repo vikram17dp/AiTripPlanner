@@ -6,7 +6,7 @@ export const HotelSection = ({ hotels }) => {
   return (
     <div className="my-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 className="text-2xl font-bold mb-6">Recommended Hotels</h2>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {hotelsList.length > 0 ? (
           hotelsList.map((hotel, index) => {
             const { latitude, longitude } = hotel.location || {};
@@ -15,36 +15,39 @@ export const HotelSection = ({ hotels }) => {
               : `https://www.google.com/maps/search/?q=${encodeURIComponent(hotel.locationInMap || hotel.location || '')}`;
 
             return (
-              <div key={index} className="border rounded-lg p-4 shadow-md">
+              <div key={index} className="border rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:shadow-lg hover:scale-[1.02]">
                 <div className="flex flex-col sm:flex-row">
-                  <div className="w-full sm:w-1/2 mb-4 sm:mb-0">
+                  <div className="w-full sm:w-4/6 h-48 sm:h-auto p-4">
                     <img 
                       src={'/tour.webp'} 
                       alt={hotel.hotelName} 
-                      className="w-full h-48 sm:h-full object-cover rounded-lg"
+                      className="w-full h-full object-cover rounded-lg"
                     />
                   </div>
-                  <div className="w-full sm:w-1/2 sm:pl-6">
-                    <h3 className="text-xl font-semibold mb-2">{hotel.hotelName || "Hotel Name not available"}</h3>
-                    <p className="text-gray-600 mb-4 text-sm">{hotel.description || "Description not available"}</p>
+                  <div className="w-full sm:w-3/5 p-4 sm:p-6">
+                    <h3 className="text-lg sm:text-xl font-semibold mb-2 ">{hotel.hotelName || "Hotel Name not available"}</h3>
+                    <p className="text-gray-600 mb-4 text-sm line-clamp-2">{hotel.description || "Description not available"}</p>
 
-                    <p className="text-sm text-gray-500 flex items-center gap-2 mb-2">
-                      🌟 <span className="font-bold">Rating:</span> {hotel.rating || "Rating not available"}
-                    </p>
+                    <div className="space-y-2">
+                      <p className="text-sm text-gray-500 flex items-center gap-2">
+                        🌟 <span className="font-medium">Rating:</span> {hotel.rating || "N/A"}
+                      </p>
 
-                    <p className="text-sm text-gray-500 flex items-center gap-2 mb-2">
-                      💵 <span className="font-bold">Price:</span> {hotel.price || "Price not available"}
-                    </p>
+                      <p className="text-sm text-gray-500 flex items-center gap-2">
+                        💵 <span className="font-medium">Price:</span> {hotel.price || "N/A"}
+                      </p>
 
-                    <p className="text-sm text-gray-500 flex items-center gap-2 mb-2">
-                      📍 <span className="font-bold">Location:</span> {hotel.location || "Location not available"}
-                    </p>
+                      <p className="text-sm text-gray-500 flex items-center gap-2">
+                        📍 <span className="font-medium">Location:</span> 
+                        <span className="line-clamp-1">{hotel.location || "N/A"}</span>
+                      </p>
+                    </div>
 
                     <a 
                       href={googleMapsUrl} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="text-blue-500 hover:underline text-sm"
+                      className="inline-block mt-4 text-blue-500 hover:underline text-sm"
                     >
                       View on Map
                     </a>
@@ -60,3 +63,4 @@ export const HotelSection = ({ hotels }) => {
     </div>
   );
 };
+
