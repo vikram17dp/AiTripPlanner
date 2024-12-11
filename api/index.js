@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/mongodb.js";
@@ -14,14 +13,7 @@ connectCloudinary();
 
 const port = process.env.PORT || 4000;
 
-app.use(cors({
-  origin: '*', 
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,  
-}));
-
-app.options('*', cors());
+app.use(cors());
 
 
 app.use("/api/user", userRouter);
