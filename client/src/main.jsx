@@ -16,6 +16,7 @@ import ProtectedRoute from "./authentication/ProtectedRoute";
 import ProfilePage from "./authentication/ProfilePage";
 import ViewTrip from "./view-trip/components/Index";
 import MyTrips from "./my-trips/MyTrips";
+import Chatbot from "./chatapplication/Chatbot";
 
 const router = createBrowserRouter([
   {
@@ -82,6 +83,18 @@ const router = createBrowserRouter([
       <>
         <Header />
         <MyTrips/>
+      </>
+    ),
+  },
+  {
+    path: "/chatbot",
+    element: (
+      <>
+        <Header />
+        <ProtectedRoute>
+
+        <Chatbot/>
+        </ProtectedRoute>
       </>
     ),
   },

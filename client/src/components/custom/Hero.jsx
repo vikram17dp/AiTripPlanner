@@ -47,7 +47,7 @@ const Hero = () => {
         onMouseLeave={() => setIsTooltipVisible(false)}
       >
         <Link 
-          to="/" 
+          to="/chatbot" 
           className="block p-3 sm:p-4 bg-blue-600 text-white rounded-full shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out"
           aria-label="AI Chatbot"
         >

@@ -34,7 +34,7 @@ const Header = () => {
           <div className="flex items-center">
             <NavLink to="/" className="cursor-pointer">
               <img
-                className="h-12 w-auto mr-3 object-contain transition-transform duration-300 hover:scale-105" 
+                className="sm:h-12 w-auto mr-3 object-contain transition-transform duration-300 hover:scale-105 h-8" 
                 src="/logo1.png"  
                 alt="AiTripPlanner Logo"
               />
@@ -46,7 +46,9 @@ const Header = () => {
             {/* Profile Picture & Menu (Mobile Version) */}
             {userData && (
               <div className="relative">
+                
                 <button onClick={handleProfileToggle}>
+                  
                   <img
                     src={userData.image}
                     alt="Profile"
@@ -259,7 +261,7 @@ const Header = () => {
                   <NavLink to="/signup">
                     <Button
                       variant="secondary"
-                      className="block w-full px-4 py-2 text-center bg-indigo-600 text-white mt-2 hover:bg-indigo-700 transition duration-300"
+                      className="block w-full px-4 py-2 text-center bg-indigo-600 text-white mt-2 hover:bg-indigo-700 transition duration-300 "
                       onClick={() => setMenuOpen(false)}
                     >
                       Sign Up
