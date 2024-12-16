@@ -1,3 +1,4 @@
+// ItinerarySection.js
 import React from 'react';
 
 const ItinerarySection = ({ itinerary = {} }) => {
@@ -18,7 +19,6 @@ const ItinerarySection = ({ itinerary = {} }) => {
                     const imageUrl = place.imageUrl || '/tour.webp';
                     const { latitude, longitude } = place.location || {};
 
-                  
                     const googleMapsUrl = latitude && longitude 
                       ? `https://www.google.com/maps/search/?q=${latitude},${longitude}`
                       : '#';
