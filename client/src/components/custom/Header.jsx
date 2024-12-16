@@ -9,6 +9,7 @@ const Header = () => {
   const { userData, setToken, setUserData } = useContext(AppContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [isBlogLoading, setIsBlogLoading] = useState(false); // Added state for blog loading
   const navigate = useNavigate()
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
@@ -24,6 +25,12 @@ const Header = () => {
 
   const handleProfileToggle = () => {
     setIsProfileMenuOpen(!isProfileMenuOpen);
+  };
+
+  const handleBlogClick = () => { // Added function to handle blog link click
+    setIsBlogLoading(true);
+    toast.info("Please wait, the blog is loading. This may take up to 10 seconds.");
+    setTimeout(() => setIsBlogLoading(false), 10000);
   };
 
   return (
@@ -131,6 +138,7 @@ const Header = () => {
               <Link
                 to="https://travellingblog.onrender.com/"
                 className="text-white hover:text-yellow-300 transition duration-300"
+                onClick={handleBlogClick} // Added onClick handler
               >
                 Traveling Blog
               </Link>
@@ -242,7 +250,10 @@ const Header = () => {
             {userData && (
               <Link
                 to="https://travellingblog.onrender.com/"
-                onClick={() => setMenuOpen(false)}
+                onClick={() => {
+                  setMenuOpen(false);
+                  handleBlogClick(); // Added onClick handler with menu close
+                }}
                 className="block px-4 py-2 hover:bg-gray-100 transition duration-150"
               >
                 Traveling Blog
