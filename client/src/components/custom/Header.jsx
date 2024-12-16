@@ -129,7 +129,7 @@ const Header = () => {
             </NavLink>
             {userData && (
               <Link
-                to="https://techy-blog.onrender.com/"
+                to="https://travellingblog.onrender.com/"
                 className="text-white hover:text-yellow-300 transition duration-300"
               >
                 Traveling Blog
@@ -241,7 +241,7 @@ const Header = () => {
             </NavLink>
             {userData && (
               <Link
-                to="https://techy-blog.onrender.com/"
+                to="https://travellingblog.onrender.com/"
                 onClick={() => setMenuOpen(false)}
                 className="block px-4 py-2 hover:bg-gray-100 transition duration-150"
               >
