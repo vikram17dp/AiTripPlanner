@@ -7,36 +7,23 @@ import connectCloudinary from './config/cloudinary.js'
 
 const app = express();
 dotenv.config();
-connectDB();
-connectCloudinary();
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://ai-trip-planner-fullstack.vercel.app"
-];
-
-// CORS configuration
+// Move CORS before any middleware or route handlers
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: ["http://localhost:3000", "https://ai-trip-planner-fullstack.vercel.app"],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: [
-    "Origin",
-    "X-Requested-With",
-    "Content-Type",
-    "Accept",
-    "Authorization"
-  ],
+  preflightContinue: true,
+  optionsSuccessStatus: 204
 }));
 
-// Body parser middleware
+// Add OPTIONS handling for preflight requests
+app.options('*', cors());
+
 app.use(express.json());
+connectDB();
+connectCloudinary();
 
 // Routes
 app.use("/api/user", userRouter);
@@ -50,4 +37,7 @@ const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log("Server is listening on port", port);
 });
+
+// Export for Vercel
+export default app;
 
