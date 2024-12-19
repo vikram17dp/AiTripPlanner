@@ -13,7 +13,25 @@ connectCloudinary();
 
 const port = process.env.PORT || 4000;
 
-app.use(cors());
+const allowedOrigins = [
+    "http://localhost:3000", 
+    "https://ai-trip-planner-fullstack.vercel.app", 
+  ];
+  
+  app.use(
+    cors({
+      origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
+      methods: ["GET", "POST", "PUT", "DELETE"], 
+      credentials: true, 
+    })
+  );
+  
 
 
 app.use("/api/user", userRouter);
